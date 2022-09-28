@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "QzPETIF2+Xkjk9DBZhRQhfuyFj41zdsTl9pmi62mfKT39eKTaHewDZMx/hZQBSDklMfEXo+gn2joWKoqiWd0KA==",
+  "success": true,
+  "projectFilePath": "c:\\Users\\noahm\\Documents\\BA3\\OFM-12X015\\TPs\\FirstIonideProject\\FirstIonideProject.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\noahm\\.nuget\\packages\\fsharp.core\\6.0.6\\fsharp.core.6.0.6.nupkg.sha512"
+  ],
+  "logs": []
+}

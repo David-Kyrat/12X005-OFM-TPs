@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "restore": {
+    "c:\\Users\\noahm\\Documents\\BA3\\OFM-12X015\\TPs\\FirstIonideProject\\FirstIonideProject.fsproj": {}
+  },
+  "projects": {
+    "c:\\Users\\noahm\\Documents\\BA3\\OFM-12X015\\TPs\\FirstIonideProject\\FirstIonideProject.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "c:\\Users\\noahm\\Documents\\BA3\\OFM-12X015\\TPs\\FirstIonideProject\\FirstIonideProject.fsproj",
+        "projectName": "FirstIonideProject",
+        "projectPath": "c:\\Users\\noahm\\Documents\\BA3\\OFM-12X015\\TPs\\FirstIonideProject\\FirstIonideProject.fsproj",
+        "packagesPath": "C:\\Users\\noahm\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\noahm\\Documents\\BA3\\OFM-12X015\\TPs\\FirstIonideProject\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\noahm\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files\\dotnet\\sdk\\6.0.401\\FSharp\\library-packs": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[6.0.6, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
