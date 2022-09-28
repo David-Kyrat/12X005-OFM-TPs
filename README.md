@@ -4,7 +4,7 @@
 
 ---  
 
-Below you can find the links the gitlabs repo of each TP
+Below you can find the links to the the gitlabs repositories for each TP
 
 <br/>  
 
