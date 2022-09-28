@@ -6,9 +6,9 @@
 
 Below you can find the links to the the gitlabs repositories for each TP
 
-<br/>  
 
 ### Rendus:
- - [TP 01](https://gitlab.unige.ch/Noah.Munz/ofm-exercise-1)
+
+- [TP 01](https://gitlab.unige.ch/Noah.Munz/ofm-exercise-1)
 
 
