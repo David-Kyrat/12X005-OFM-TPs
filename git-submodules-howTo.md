@@ -5,7 +5,6 @@
 
 ---
 
-<br/>
 
 
 ### Adding Submodules to repo
@@ -17,8 +16,6 @@ git submodule add <ssh-address> <NameOfWantedFolder>
 ```
 
 Where `NameOfWantedFolder` is optional and will default to the name of repo.
-
-<br>
 
 
 ### Init submodules
