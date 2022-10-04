@@ -1,3 +1,3 @@
-[submodule "TP01"]
-	path = TP01
+[submodule "Serie01"]
+	path = Serie01
 	url = git@gitlab.unige.ch:Noah.Munz/ofm-exercise-1.git
