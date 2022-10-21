@@ -4,6 +4,3 @@
 [submodule "TP01"]
 	path = TP01
 	url = git@gitlab.unige.ch:Noah.Munz/12-x-005-ofm-homework-1.git
-[submodule "TP02"]
-	path = TP02
-	url = git@gitlab.unige.ch:Noah.Munz/homework-2.git
