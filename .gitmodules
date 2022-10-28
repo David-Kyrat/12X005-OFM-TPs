@@ -16,3 +16,6 @@
 [submodule "ofm-serie-02"]
 	path = ofm-serie-02
 	url = git@gitlab.unige.ch:Noah.Munz/ofm-serie-02.git
+[submodule "Serie02"]
+	path = Serie02
+	url = git@gitlab.unige.ch:Noah.Munz/ofm-serie-02.git
