@@ -16,3 +16,6 @@
 [submodule "Serie02"]
 	path = Serie02
 	url = git@gitlab.unige.ch:Noah.Munz/ofm-serie-02.git
+[submodule "Serie05"]
+	path = Serie05
+	url = git@gitlab.unige.ch:smv-ofm/semestre-automne-2022/exercise-5.git
