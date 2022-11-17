@@ -85,8 +85,8 @@ module CoverabilityGraph =
         Set.exists predicate (markings graph)
 
     /// Returns the edges (Marking -> (Transition -> Marking)) who's marking on the "right side" (i.e. the values of the Map<'Transition, Marking<'Place>>)
-    /// satisfies the given predicate. (the Markings on the "left" side are the predecessors and on the "right side" the successors) 
-    (*let filterRight (predicate: 'Transition -> Marking<'Place> -> bool) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
+    /// satisfies the given predicate for at least one (Transition->Marking) pair. (the Markings on the "left" side are the predecessors and on the "right side" the successors) 
+    let filterRight (predicate: 'Transition -> Marking<'Place> -> bool) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
         edges |> Map.map (fun k v -> v |> Map.filter (predicate))
               |> Map.filter (fun _ v -> not (Map.isEmpty v))
     
@@ -104,7 +104,7 @@ module CoverabilityGraph =
                 // if not store the predecessors and continue the search for the predecessor of 's'
                 | KeyValue (mi, _) -> (mi :: path) |> searchPathRec mi
             
-        List.empty |> searchPathRec s*)
+        List.empty |> searchPathRec s
     
     /// Returns the set of markings in a coverability graph that satisfy some predicate.
     let filter

@@ -53,22 +53,24 @@ let toStrV(dict:Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>) =
 let getTr (model:Model<'Place, 'Transition>) =
     Model.transitions model |> Set.toList    
 
-//let updatePredWithOmega(predMap:Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>, crtMark: Marking<'Place>, newM: Marking<'Place>, predOmega:Marking<'Place>) =
-    
+/// Returns the edges (Marking -> (Transition -> Marking)) who's marking on the "right side" (i.e. the values of the Map<'Transition, Marking<'Place>>)
+/// satisfies the given predicate for at least one (Transition->Marking) pair. (the Markings on the "left" side are the predecessors and on the "right side" the successors)
+let filterRight (predicate: 'Transition -> Marking<'Place> -> bool) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
+    edges
+    |> Map.filter (fun pred succMap -> succMap
+                                       |> Map.exists predicate ) //(fun k v -> predicate k v)
 
 [<RequireQualifiedAccess>]
 module CoverabilityGraph =
 
     open System.Collections.Generic
-    open System.Diagnostics
-
     /// Builds the coverability graph for a model, given some initial marking.
     (*let make (model: Model<'Place, 'Transition>) (marking: Marking<'Place>) : CoverabilityGraph<'Place, 'Transition> =
         {Root = marking; Edges = Map.empty} // TODO: complete this function to return the coverability graph of a model.*)
 
     /// Builds the marking graph for a model, given some initial marking as its root.
     let make (model: Model<'Place, 'Transition>) (marking: Marking<'Place>) : CoverabilityGraph<'Place, 'Transition> =
-        let rec predecessors (marking_init: Marking<'Place>) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
+        let rec predece (marking_init: Marking<'Place>) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
             let marking =
                 edges
                 |> Map.filter (fun _ successors -> successors |> Map.exists (fun _ marking' -> marking' = marking_init))//Je regarde pour chaque Marking dans egdes si il y en a qui possèdent un successeur (Map<'Transition,Marking<'Place>>) egal au marquage initial. 
@@ -76,8 +78,30 @@ module CoverabilityGraph =
                 |> List.ofSeq //Je le transforme en liste pour pouvoir prendre le premier
                 |> List.tryHead
             match marking with
-                | Some marking' -> Set.add marking' (predecessors marking' edges)//Si y'a un marquage j'ajoute au set et je cherche les predecesseurs de ce marquage recursivement
+                | Some marking' -> Set.add marking' (predece marking' edges)//Si y'a un marquage j'ajoute au set et je cherche les predecesseurs de ce marquage recursivement
                 | None -> Set.empty //Si TryHead renvoie None -> fini
+         
+         //bottom up approach of searching predecessors by searching a path (a sequence of marking&transition) from 's' to the top (until there's no more predecessors of 's')
+        let rec searchPath (s: Marking<'Place>) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
+            match edges
+                    // searches for edges (predecessor -> (transition -> successor)) where successor = s (i.e. searched node)
+                    |> filterRight (fun succTrans succMark -> succMark = s)
+                    |> Seq.tryHead
+            with
+               | Some (KeyValue (crtPred, succMap)) -> Set.add crtPred (searchPath crtPred edges)
+               | None -> Set.empty                                      
+                   //(searchPath crtPred edges) |> Set.add crtPred 
+               (*| Some marking' -> Set.add marking' (searchPath marking' edges)*)
+               //| None -> Set.empty
+            
+            
+        /// search for a path (a sequence of marking&transition) between the searched-node 's' and m0 and extract from it the predecessors of "s"  
+        //let rec searchPath (s: Marking<'Place>) (m0: Marking<'Place>) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) = 
+            //let path = edges
+              //         |> Map.filter ()
+            //null
+                       
+        
         
         let fire (marking: Marking<'Place>, tr: 'Transition) =
             Model.fire model marking tr  
@@ -138,7 +162,7 @@ module CoverabilityGraph =
                 markings' |>
                 Seq.iter(fun markKey ->
                                     predMap |> addKIfNex markKey //add markKey prede to predMap
-                                    predMap[markKey].UnionWith (predecessors markKey edges'))
+                                    predMap[markKey].UnionWith (searchPath markKey edges'))
                 fixpoint markings' edges'
 
         { Root = marking
