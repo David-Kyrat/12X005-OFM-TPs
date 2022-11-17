@@ -63,48 +63,23 @@ let filterRight (predicate: 'Transition -> Marking<'Place> -> bool) (edges: Map<
 [<RequireQualifiedAccess>]
 module CoverabilityGraph =
 
-    open System.Collections.Generic
-    /// Builds the coverability graph for a model, given some initial marking.
-    (*let make (model: Model<'Place, 'Transition>) (marking: Marking<'Place>) : CoverabilityGraph<'Place, 'Transition> =
-        {Root = marking; Edges = Map.empty} // TODO: complete this function to return the coverability graph of a model.*)
-
-    /// Builds the marking graph for a model, given some initial marking as its root.
+        /// Builds the marking graph for a model, given some initial marking as its root.
     let make (model: Model<'Place, 'Transition>) (marking: Marking<'Place>) : CoverabilityGraph<'Place, 'Transition> =
-        let rec predece (marking_init: Marking<'Place>) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
-            let marking =
-                edges
-                |> Map.filter (fun _ successors -> successors |> Map.exists (fun _ marking' -> marking' = marking_init))//Je regarde pour chaque Marking dans egdes si il y en a qui possèdent un successeur (Map<'Transition,Marking<'Place>>) egal au marquage initial. 
-                |> Map.keys //Je recupere le Marking de edge et l'extrait grâce a Keys
-                |> List.ofSeq //Je le transforme en liste pour pouvoir prendre le premier
-                |> List.tryHead
-            match marking with
-                | Some marking' -> Set.add marking' (predece marking' edges)//Si y'a un marquage j'ajoute au set et je cherche les predecesseurs de ce marquage recursivement
-                | None -> Set.empty //Si TryHead renvoie None -> fini
          
-         //bottom up approach of searching predecessors by searching a path (a sequence of marking&transition) from 's' to the top (until there's no more predecessors of 's')
+        ///Bottom up approach of searching predecessors by searching a path (a sequence of marking&transition) from 's' to the top (until there's no more predecessors of 's')
         let rec searchPath (s: Marking<'Place>) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
             match edges
                     // searches for edges (predecessor -> (transition -> successor)) where successor = s (i.e. searched node)
                     |> filterRight (fun succTrans succMark -> succMark = s)
                     |> Seq.tryHead
             with
-               | Some (KeyValue (crtPred, succMap)) -> Set.add crtPred (searchPath crtPred edges)
+               | Some (KeyValue (crtPred, succMap)) -> (searchPath crtPred edges) |> Set.add crtPred 
                | None -> Set.empty                                      
                    //(searchPath crtPred edges) |> Set.add crtPred 
                (*| Some marking' -> Set.add marking' (searchPath marking' edges)*)
                //| None -> Set.empty
-            
-            
-        /// search for a path (a sequence of marking&transition) between the searched-node 's' and m0 and extract from it the predecessors of "s"  
-        //let rec searchPath (s: Marking<'Place>) (m0: Marking<'Place>) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) = 
-            //let path = edges
-              //         |> Map.filter ()
-            //null
-                       
         
         
-        let fire (marking: Marking<'Place>, tr: 'Transition) =
-            Model.fire model marking tr  
         let predMap = new Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>()
         predMap |> addKIfNex marking // initialize map of predecessors with the root mapped to the empty set  
         
