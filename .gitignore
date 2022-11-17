@@ -2,3 +2,5 @@
 *.vscode
 Test-TP01
 TP03-notgitlab
+*.ps1
+
