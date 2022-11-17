@@ -37,28 +37,14 @@ type CoverabilityGraph<'Place, 'Transition when 'Place: comparison and 'Transiti
 /// Add given key to given dict if it doesn't contain it
 let addKIfNex (el:Marking<'Place>) (dict:Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>) =
     if (not (dict.ContainsKey el)) then
-        dict.Add (el, new HashSet<Marking<'Place>>())
-
-//let udpateWithMapofPre
-let toL (dict:Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>) =
-    List.ofSeq dict.Keys
-    
-let toStrK(dict:Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>) =
-    toL dict |> List.map  (fun k -> sprintf "%s\n" $"{k}")
-let toStrV(dict:Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>) =
-    List.ofSeq dict.Values |> List.map (fun v ->
-        v |> Seq.map (fun el -> sprintf "%s, " $"{el}"))
-    |> List.map (fun v -> sprintf "%s\n" $"{v}")
-
-let getTr (model:Model<'Place, 'Transition>) =
-    Model.transitions model |> Set.toList    
+        dict.Add (el, new HashSet<Marking<'Place>>()) 
 
 /// Returns the edges (Marking -> (Transition -> Marking)) who's marking on the "right side" (i.e. the values of the Map<'Transition, Marking<'Place>>)
 /// satisfies the given predicate for at least one (Transition->Marking) pair. (the Markings on the "left" side are the predecessors and on the "right side" the successors)
 let filterRight (predicate: 'Transition -> Marking<'Place> -> bool) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
     edges
     |> Map.filter (fun pred succMap -> succMap
-                                       |> Map.exists predicate ) //(fun k v -> predicate k v)
+                                       |> Map.exists predicate )
 
 [<RequireQualifiedAccess>]
 module CoverabilityGraph =
