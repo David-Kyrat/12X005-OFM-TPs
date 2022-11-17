@@ -51,7 +51,9 @@ let toStrV(dict:Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>) =
     |> List.map (fun v -> sprintf "%s\n" $"{v}")
 
 let getTr (model:Model<'Place, 'Transition>) =
-    Model.transitions model |> Set.toList
+    Model.transitions model |> Set.toList    
+
+//let updatePredWithOmega(predMap:Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>, crtMark: Marking<'Place>, newM: Marking<'Place>, predOmega:Marking<'Place>) =
     
 
 [<RequireQualifiedAccess>]
@@ -66,6 +68,17 @@ module CoverabilityGraph =
 
     /// Builds the marking graph for a model, given some initial marking as its root.
     let make (model: Model<'Place, 'Transition>) (marking: Marking<'Place>) : CoverabilityGraph<'Place, 'Transition> =
+        let rec predecessors (marking_init: Marking<'Place>) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
+            let marking =
+                edges
+                |> Map.filter (fun _ successors -> successors |> Map.exists (fun _ marking' -> marking' = marking_init))//Je regarde pour chaque Marking dans egdes si il y en a qui possèdent un successeur (Map<'Transition,Marking<'Place>>) egal au marquage initial. 
+                |> Map.keys //Je recupere le Marking de edge et l'extrait grâce a Keys
+                |> List.ofSeq //Je le transforme en liste pour pouvoir prendre le premier
+                |> List.tryHead
+            match marking with
+                | Some marking' -> Set.add marking' (predecessors marking' edges)//Si y'a un marquage j'ajoute au set et je cherche les predecesseurs de ce marquage recursivement
+                | None -> Set.empty //Si TryHead renvoie None -> fini
+        
         let fire (marking: Marking<'Place>, tr: 'Transition) =
             Model.fire model marking tr  
         let predMap = new Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>()
@@ -97,11 +110,12 @@ module CoverabilityGraph =
                     //predMap[crtMark].Add crtMark //seemed to be essential
                     
                     predMap[newM].UnionWith (predMap[crtMark])
-                    
+                    //TODO: call setOmegas on each marking in predMap
                     let predOmega = setOmegas (predMap[newM] |> Set.ofSeq) newM
+                    
                     successors |> Map.add transition predOmega)
                 Map.empty
-
+        
         let rec fixpoint markings edges =
             let edges' =
                 markings
@@ -120,6 +134,11 @@ module CoverabilityGraph =
             if Set.isEmpty markings' then
                 edges'
             else
+                //updating predMap
+                markings' |>
+                Seq.iter(fun markKey ->
+                                    predMap |> addKIfNex markKey //add markKey prede to predMap
+                                    predMap[markKey].UnionWith (predecessors markKey edges'))
                 fixpoint markings' edges'
 
         { Root = marking

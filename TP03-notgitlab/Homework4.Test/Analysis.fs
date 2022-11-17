@@ -65,10 +65,12 @@ module CoverabilityGraph =
                     let newM = (Model.fire model marking transition).Value
                     predMap |> addKIfNex newM
                     predMap[newM].Add marking
-                    //predMap |> newM
+                    if (predMap.ContainsKey marking) then
+                        predMap[newM].UnionWith (predMap[marking])
                     let newM = (Model.fire model marking transition).Value
-                    
-                    Map.add transition (setOmegas (prede.[marking].Add(marking)) newM) successors)
+                    let argvx = prede.[marking].Add(marking)
+                    let predOmega = setOmegas (argvx) newM
+                    Map.add transition (predOmega) successors)
                 Map.empty
 
         //Le set de predecessor de depart que je vais actualiser au fur et a mesure
@@ -107,7 +109,7 @@ module CoverabilityGraph =
 
                 //On met a jour nos predecesseurs. Assez similaire a edges' sauf qu'on va utiliser prede et Status comme state et set.
                 //Predecessors nous donne les values a associer (.Add) a chaque key (marking) de updates_prede
-                let prede' = Set.fold(fun updated_prede mark -> Map.add mark (predecessors mark edges' ) updated_prede) prede markings'      
+                let prede' =  markings' |> Set.fold(fun updated_prede mark -> updated_prede |> Map.add mark (predecessors mark edges' )) prede      
                //On rappel fixpoint avec edges' et prede' mis a jour
                 fixpoint markings' edges' prede'
 
