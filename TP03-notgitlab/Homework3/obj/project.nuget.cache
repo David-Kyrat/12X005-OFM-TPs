@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "XtZssOcgmVtrYy5s+cn/+zAPw5ktPlboeCj3/36yx5s2t/V1xt4QG0M7oSEoKG5U+BErC0FbrQV+zUPZj7idkA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3\\Homework3.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\noahm\\.nuget\\packages\\fsharp.core\\6.0.7\\fsharp.core.6.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}

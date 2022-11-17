@@ -1,0 +1,155 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3.Test\\Homework3.Test.fsproj": {}
+  },
+  "projects": {
+    "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3.Test\\Homework3.Test.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3.Test\\Homework3.Test.fsproj",
+        "projectName": "Homework3.Test",
+        "projectPath": "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3.Test\\Homework3.Test.fsproj",
+        "packagesPath": "C:\\Users\\noahm\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3.Test\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\noahm\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files\\dotnet\\sdk\\6.0.403\\FSharp\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3\\Homework3.fsproj": {
+                "projectPath": "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3\\Homework3.fsproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[7.0.0, )",
+              "generatePathProperty": true
+            },
+            "FsUnit.xUnit": {
+              "target": "Package",
+              "version": "[5.1.0, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.4.0, )",
+              "generatePathProperty": true
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.2.0, )",
+              "generatePathProperty": true
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.2, )",
+              "generatePathProperty": true
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.5, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3\\Homework3.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3\\Homework3.fsproj",
+        "projectName": "Homework3",
+        "projectPath": "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3\\Homework3.fsproj",
+        "packagesPath": "C:\\Users\\noahm\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\noahm\\OneDrive\\Documents\\BA3\\OFM-12X015\\TPs-Series\\TP03-notgitlab\\Homework3\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\noahm\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files\\dotnet\\sdk\\6.0.403\\FSharp\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[6.0.7, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

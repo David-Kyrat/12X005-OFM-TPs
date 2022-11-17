@@ -1,0 +1,14 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/CodeInspection/PencilsConfiguration/ActualSeverity/@EntryValue">SUGGESTION</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=755847a1_002D437e_002D4af7_002Da23a_002Da0ad3a7fa8b7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Tests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::33CB61A5-DEC6-4C5C-A3FD-9E9AC00AE283::net6.0::Analysis.Tests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::93E7C1D5-10A7-4B70-8B7F-7F40CA3539A0::net6.0::Analysis.Tests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9052ED92-11F2-4845-8602-1C96BD1E5689::net6.0::Analysiss.Tests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	</wpf:ResourceDictionary>
