@@ -49,7 +49,7 @@ let filterRight (predicate: 'Transition -> Marking<'Place> -> bool) (edges: Map<
 [<RequireQualifiedAccess>]
 module CoverabilityGraph =
 
-        /// Builds the marking graph for a model, given some initial marking as its root.
+     /// Builds the marking graph for a model, given some initial marking as its root.
     let make (model: Model<'Place, 'Transition>) (marking: Marking<'Place>) : CoverabilityGraph<'Place, 'Transition> =
          
         ///Bottom up approach of searching predecessors by searching a path (a sequence of marking&transition) from 's' to the top (until there's no more predecessors of 's')
@@ -67,25 +67,11 @@ module CoverabilityGraph =
         predMap |> addKIfNex marking // initialize map of predecessors with the root mapped to the empty set  
         
         let successors (crtMark: Marking<'Place>) =
-            let fire (marking: Marking<'Place>, tr: 'Transition) =
-                Model.fire model marking tr
-            
-            printfn "keys: %s" $"{predMap.Keys}"
-            printfn "Values: %s" $"{predMap.Values}"
-            if (predMap.ContainsKey crtMark) then
-                printfn "predMap[%s]=%s\n" $"{crtMark}" $"{predMap[crtMark]}"
-            else
-                printfn "crtMark %s does not exist in predMap!\n" $"{crtMark}"
             Model.getFireable model crtMark
             |> Set.fold
                 (fun successors transition ->
                     let newM = (Model.fire model crtMark transition).Value
                     predMap |> addKIfNex newM
-                    if (not (predMap.ContainsKey crtMark)) then
-                        printfn "Keys: %s\n" $"{predMap.Keys}"
-                        printfn "crtMark: %s\n" $"{crtMark}"
-                        printfn "predMap does not contain a before key !!"
-                        exit -1
                     predMap[newM].Add crtMark |> ignore //we dont care if the addition returned false
                     // if we have an edge (crtMark, newM) then crtMark will be added to the predecessors (pred) set of newM (easy)
                     // now we have to add the predecessors of crtMark to the preds of newM//if (predMap.ContainsKey crtMark) then
@@ -98,10 +84,17 @@ module CoverabilityGraph =
                     successors |> Map.add transition predOmega)
                 Map.empty
         
+        /// Since we changed our markings by replacing when necessary with an omega => we need to update predecessor Map.
+        /// i.e. What this function does. (predMap is mutable map of (Marking -> mutable set of predecessors of said marking)
+        /// (mutable map i.e. Dictionary, mutable set i.e. Hashset)
+        let updatePredMapWithOmegas (markings': Set<Marking<'Place>>) edges' =
+            markings' |> Seq.iter (fun markKey -> 
+                                                  predMap |> addKIfNex markKey //add markKey to predMap if it doesnt exist
+                                                  predMap[markKey].UnionWith (searchPath markKey edges'))
+            
         let rec fixpoint markings edges =
-            let edges' =
-                markings
-                |> Set.fold (fun newEdges marking -> Map.add marking (successors marking) newEdges) edges
+            let edges' = markings
+                            |> Set.fold (fun newEdges marking -> Map.add marking (successors marking) newEdges) edges
 
             let visitedMarkings, allMarkings =
                 edges'
@@ -110,27 +103,12 @@ module CoverabilityGraph =
                         (Set.add marking visitedMarkings, Set.union (Set.ofSeq (Map.values successors)) allMarkings))
                     (Set.empty, Set.empty)
 
-            //let markings' = Set.difference allMarkings visitedMarkings
-
             match Set.difference allMarkings visitedMarkings
             with
                 | markings' when markings'.IsEmpty -> edges'
-                | markings' -> markings'
-                                |> Seq.iter (fun markKey ->
-                                                predMap |> addKIfNex markKey //add markKey to predMap if it doesnt exist
-                                                predMap[markKey].UnionWith (searchPath markKey edges'))
+                | markings' ->
+                               edges' |> updatePredMapWithOmegas markings'
                                fixpoint markings' edges'
-                               
-            
-            (*if Set.isEmpty markings' then
-                edges'
-            else
-                // Since we changed our markings by replacing when necessary with an omega => we need to update predecessor Map 
-                markings' |>
-                Seq.iter(fun markKey ->
-                                    predMap |> addKIfNex markKey //add markKey prede to predMap
-                                    predMap[markKey].UnionWith (searchPath markKey edges'))
-                fixpoint markings' edges'*)
 
         { Root = marking
           Edges = fixpoint (Set.singleton marking) Map.empty }
