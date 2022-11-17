@@ -74,14 +74,9 @@ module CoverabilityGraph =
                     predMap |> addKIfNex newM
                     predMap[newM].Add crtMark |> ignore //we dont care if the addition returned false
                     // if we have an edge (crtMark, newM) then crtMark will be added to the predecessors (pred) set of newM (easy)
-                    // now we have to add the predecessors of crtMark to the preds of newM//if (predMap.ContainsKey crtMark) then
-                    //predMap[crtMark].Add crtMark //seemed to be essential
-                    
+                    // now we have to add the predecessors of crtMark to the preds of newM
                     predMap[newM].UnionWith (predMap[crtMark])
-                    //TODO: call setOmegas on each marking in predMap
-                    let predOmega = setOmegas (predMap[newM] |> Set.ofSeq) newM
-                    
-                    successors |> Map.add transition predOmega)
+                    successors |> Map.add transition (setOmegas (predMap[newM] |> Set.ofSeq) newM))
                 Map.empty
         
         /// Since we changed our markings by replacing when necessary with an omega => we need to update predecessor Map.
