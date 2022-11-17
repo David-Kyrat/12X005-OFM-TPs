@@ -43,8 +43,8 @@ let addKIfNex (el:Marking<'Place>) (dict:Dictionary<Marking<'Place>, HashSet<Mar
 /// satisfies the given predicate for at least one (Transition->Marking) pair. (the Markings on the "left" side are the predecessors and on the "right side" the successors)
 let filterRight (predicate: 'Transition -> Marking<'Place> -> bool) (edges: Map<Marking<'Place>, Map<'Transition, Marking<'Place>>>) =
     edges
-    |> Map.filter (fun pred succMap -> succMap
-                                       |> Map.exists predicate )
+        |> Map.filter (fun pred succMap -> succMap
+                                           |> Map.exists predicate )
 
 [<RequireQualifiedAccess>]
 module CoverabilityGraph =
@@ -61,9 +61,6 @@ module CoverabilityGraph =
             with
                | Some (KeyValue (crtPred, succMap)) -> (searchPath crtPred edges) |> Set.add crtPred 
                | None -> Set.empty                                      
-                   //(searchPath crtPred edges) |> Set.add crtPred 
-               (*| Some marking' -> Set.add marking' (searchPath marking' edges)*)
-               //| None -> Set.empty
         
         
         let predMap = new Dictionary<Marking<'Place>, HashSet<Marking<'Place>>>()
@@ -113,18 +110,27 @@ module CoverabilityGraph =
                         (Set.add marking visitedMarkings, Set.union (Set.ofSeq (Map.values successors)) allMarkings))
                     (Set.empty, Set.empty)
 
-            let markings' =
-                Set.difference allMarkings visitedMarkings
+            //let markings' = Set.difference allMarkings visitedMarkings
 
-            if Set.isEmpty markings' then
+            match Set.difference allMarkings visitedMarkings
+            with
+                | markings' when markings'.IsEmpty -> edges'
+                | markings' -> markings'
+                                |> Seq.iter (fun markKey ->
+                                                predMap |> addKIfNex markKey //add markKey to predMap if it doesnt exist
+                                                predMap[markKey].UnionWith (searchPath markKey edges'))
+                               fixpoint markings' edges'
+                               
+            
+            (*if Set.isEmpty markings' then
                 edges'
             else
-                //updating predMap
+                // Since we changed our markings by replacing when necessary with an omega => we need to update predecessor Map 
                 markings' |>
                 Seq.iter(fun markKey ->
                                     predMap |> addKIfNex markKey //add markKey prede to predMap
                                     predMap[markKey].UnionWith (searchPath markKey edges'))
-                fixpoint markings' edges'
+                fixpoint markings' edges'*)
 
         { Root = marking
           Edges = fixpoint (Set.singleton marking) Map.empty }
