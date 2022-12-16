@@ -40,3 +40,6 @@
 [submodule "Serie11"]
 	path = Serie11
 	url = git@gitlab.unige.ch:Noah.Munz/ofm-serie-11.git
+[submodule "TP05"]
+	path = TP05
+	url = git@gitlab.unige.ch:Noah.Munz/ofm-homework-5.git
