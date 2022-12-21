@@ -1,0 +1,35 @@
+Sure! Here is an algorithm for converting a logical formula into Negation Normal Form (NNF) in the F# programming language:
+
+If the formula is a literal (i.e., a variable or its negation), return the formula.
+If the formula is of the form "not (A)" where A is a formula, apply the following rules:
+If A is a literal, return the negation of A.
+If A is of the form "not (B)", where B is a formula, return B.
+If A is of the form "and (B, C)", where B and C are formulas, return "or (not (B), not (C))".
+If A is of the form "or (B, C)", where B and C are formulas, return "and (not (B), not (C))".
+If the formula is of the form "and (A, B)" or "or (A, B)", where A and B are formulas, recursively convert A and B to NNF and return the resulting formula in NNF.
+Here is some example F# code that implements this algorithm:
+
+
+type Formula =
+    | Literal of string
+    | Not of Formula
+    | And of Formula * Formula
+    | Or of Formula * Formula
+
+let rec toNNF (formula: Formula) : Formula =
+    match formula with
+    | Literal x -> Literal x
+    | Not f ->
+        match f with
+        | Literal x -> Not (Literal x)
+        | Not g -> g
+        | And (g, h) -> Or (Not g, Not h)
+        | Or (g, h) -> And (Not g, Not h)
+    | And (f, g) -> And (toNNF f, toNNF g)
+    | Or (f, g) -> Or (toNNF f, toNNF g)
+
+This code defines a Formula type and a recursive function toNNF that takes a formula and returns its equivalent in NNF. The function pattern matches on the input formula and applies the rules specified in the algorithm.
+
+I hope this helps! Let me know if you have any questions.
+
+
