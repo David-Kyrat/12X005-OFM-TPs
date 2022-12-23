@@ -1,0 +1,12 @@
+# FSharp
+[Bb]in/
+[Oo]bj/
+
+# User specific
+*.user
+
+# IDE
+.idea/
+
+# macOS
+.DS_Store

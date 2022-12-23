@@ -1,0 +1,116 @@
+\documentclass[a4paper, titlepage]{article}
+\usepackage[round, sort, numbers]{natbib}
+\usepackage[utf8]{inputenc}
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{mathtools}
+\usepackage{multicol}
+\usepackage{paralist}
+\usepackage{parskip}
+\usepackage{subfig}
+\usepackage{tikz}
+\usepackage{titlesec}
+
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+
+\usetikzlibrary{arrows, automata, backgrounds, petri, positioning}
+\tikzstyle{place}=[circle, draw=blue!50, fill=blue!20, thick]
+\tikzstyle{marking}=[circle, draw=blue!50, thick, align=center]
+\tikzstyle{transition}=[rectangle, draw=black!50, fill=black!20, thick]
+
+% define new commands for sets and tuple
+\newcommand{\setof}[1]{\ensuremath{\left \{ #1 \right \}}}
+\newcommand{\tuple}[1]{\ensuremath{\left \langle #1 \right \rangle }}
+\newcommand{\card}[1]{\ensuremath{\left \vert #1 \right \vert }}
+
+\lstdefinestyle{mystyle}{
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\definecolor{lstbg}{rgb}{1,1,0.9}
+\lstset{basicstyle=\ttfamily, numberstyle=\tiny, breaklines=true, backgroundcolor=\color{lstbg}, frame=single}
+\lstset{language=C}
+
+\makeatletter
+\newcommand\objective[1]{\def\@objective{#1}}
+\newcommand{\makecustomtitle}{%
+	\begin{center}
+		\huge\@title \\
+		[1ex]\small Aurélien Coet, Dimitri Racordon \\
+	\end{center}
+	\@objective
+}
+\makeatother
+
+\begin{document}
+
+  \title{Outils formels de Modélisation \\ 12\textsuperscript{ème} séance d'exercices}
+  \author{Arélien Coet, Dimitri Racordon}
+	\objective{
+    Dans cette séance d'exercices, nous allons étudier la logique du premier ordre.
+    Nous tâcherons notamment de traduire des phrases d'un domaine externe à la logique
+    en formules du premier ordre, et inversément.
+  }
+
+	\makecustomtitle
+
+  \section{logic.translate.com?fr-fol ($\bigstar$)}
+    Traduisez les phrases suivantes en formules de logique du premier ordre.
+    Créez autant de prédicats et/ou de formules que nécessaire.
+    \begin{enumerate}
+      \item Il y a un assistant qui n'est pas une femme.
+      \item Tous les étudiants sont soit des hommes, soit des femmes.
+      \item Tous les étudiants qui étudient les méthodes formelles sont intelligents.
+      \item Aucun étudiant n'est meilleur que tous les autres étudiants.
+    \end{enumerate}
+
+  \section{logic.translate.com?fol-fr ($\bigstar\bigstar$)}
+    Traduisez les formules suivantes en phrases.
+    \begin{enumerate}
+      \item $\forall a, (Homme(a) \implies Barbe(a)) \land (Femme(a) \implies \lnot Barbe(a))$
+      \item $\exists a, \exists b, \exists c, Soeur(a,b) \land Soeur(b,c) \land Soeur(c,a)$
+      \item $\forall x, \forall y, BelleSoeur(x,y) \implies \exists z, Femme(x) \land Epouse(y,z) \land Soeur(x,z)$
+      \item $\forall x, \forall y, Enfant(x) \land Pokemon(y) \implies Aime(x,y)$
+    \end{enumerate}
+
+  \pagebreak
+
+  \section{Un peu de F\# ($\bigstar\bigstar\bigstar$)}
+    La logique du premier ordre permet d'exprimer des formules sur des ensembles de tailles arbitraires,
+    éventuellement inifinis,
+    par l'utilisation des quantificateurs existentiel ($\exists$) et universel ($\forall$).
+    En F\#, on peut traduire cela par l'utilisation de prédicats sur des séquences:
+
+    \begin{lstlisting}
+    let isWoman (name: string) : bool =
+        match name with
+        | "Aline" | "Cynthia" -> true
+        | _ -> false
+
+    let people =
+        [ "Aline"; "Bernard"; "Cynthia" ]
+
+    printfn 
+        $"There are women in the list of people:
+          {List.exists isWoman people}"
+
+    printfn
+        $"There are only women in the list of people: 
+          {List.forall isWoman people}"
+    \end{lstlisting}
+
+    En partant de ce principe, écrivez les formules de logique des exercices 1 et 2 en F\#.
+
+\end{document}
